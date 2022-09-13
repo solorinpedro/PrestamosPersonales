@@ -16,6 +16,10 @@ class ocupacionviewmodel @Inject constructor(
 
     var descripcion by mutableStateOf("")
     var salario by mutableStateOf("")
+
+    var pagos = ocupacionrepository.List()
+        private set
+
     fun Guardar(){
         viewModelScope.launch {
             ocupacionrepository.Insertar(
