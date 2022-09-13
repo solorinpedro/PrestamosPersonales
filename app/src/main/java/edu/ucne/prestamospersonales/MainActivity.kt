@@ -4,10 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.material.icons.Icons
@@ -21,8 +18,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import edu.ucne.prestamospersonales.ui.theme.Componentes.Dashboard
+import edu.ucne.prestamospersonales.ui.theme.Componentes.RegistroOcupacion
+import edu.ucne.prestamospersonales.ui.theme.Componentes.RegistroPersona
 import edu.ucne.prestamospersonales.ui.theme.PrestamosPersonalesTheme
+import edu.ucne.prestamospersonales.util.Screen
 import edu.ucne.prestamospersonales.view.ocupacionviewmodel
 
 
@@ -31,94 +35,42 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PrestamosPersonalesTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    MyApp()
-                }
-            }
+           MyApp()
         }
     }
 }
 
 @Composable
-fun MyApp(
-viewModel: ocupacionviewmodel = hiltViewModel()
+fun MyApp() {
+    PrestamosPersonalesTheme {
+        // A surface container using the 'background' color from the theme
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colors.background
+        ) {
 
-) {
-    val context = LocalContext.current
+            val navHostController = rememberNavController()
+            NavHost(navController = navHostController,
+                startDestination = Screen.DashBoardScreen.route){
 
-    //validar
-    var descripcionValidar by remember { mutableStateOf(false)}
-    var salarioValidar by remember { mutableStateOf(false)}
-
-    Scaffold(
-        topBar = {
-            TopAppBar(title = { Text(text = "Registro de Ocupaciones") })
-        }
-
-    ) {it
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)) {
-            OutlinedTextField(
-                value = viewModel.descripcion,
-                onValueChange = {viewModel.descripcion = it},
-                label = { Text(text = "descripcion") },
-                modifier = Modifier.fillMaxWidth(),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Description,
-                        contentDescription = null)
-                }
-            )
-            OutlinedTextField(
-                value = viewModel.salario,
-                onValueChange = {viewModel.salario = it},
-                label = { Text(text = "salario") },
-                modifier = Modifier.fillMaxWidth(),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Money,
-                        contentDescription = null)
-                }
-            )
-            Button(onClick = {
-                descripcionValidar = viewModel.descripcion.isBlank()
-                salarioValidar = viewModel.salario.isBlank()
-
-                if(viewModel.descripcion.toString() == ""){
-                    Toast.makeText(context, "Descrpcion no debe estar vacia", Toast.LENGTH_SHORT).show()
-                }
-                if(viewModel.salario.toString() == ""){
-                    Toast.makeText(context, "Salario no debe estar vacia", Toast.LENGTH_SHORT).show()
+                composable(route = Screen.DashBoardScreen.route){
+                    Dashboard(goRegistroPersonas = {navHostController.navigate(Screen.RegistroPersonaScreen.route)},
+                        goRegistroOcupaciones = {navHostController.navigate(Screen.RegistroOcupaciones.route)})
                 }
 
-                if(!descripcionValidar){
-                    if (viewModel.salario.toFloat() > 0){
-                        viewModel.Guardar()
-                        Toast.makeText(context, "Guardado exitosamente", Toast.LENGTH_SHORT).show()
-                    }else{
-                        Toast.makeText(context, "El salario no debe de ser menor a 0", Toast.LENGTH_SHORT).show()
-                    }
+                composable(route = Screen.RegistroPersonaScreen.route){
+                    RegistroPersona(backToDashboard ={ navHostController.navigate(Screen.DashBoardScreen.route)})
                 }
 
-
-            },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp)
-
-            ) {
-                Text(text = "Guardar")
+                composable(route = Screen.RegistroOcupaciones.route){
+                    RegistroOcupacion(backToDashboard ={ navHostController.navigate(Screen.DashBoardScreen.route)})
+                }
             }
         }
     }
 }
+
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
