@@ -12,5 +12,11 @@ class Ocupacionrepository @Inject constructor(
         ){
     suspend fun Insertar(ocupacion: Ocupacion) = ocupacionDao.Insertar(ocupacion)
 
+    suspend fun Modificar(ocupacion: Ocupacion)= ocupacionDao.Modificar(ocupacion)
+
+    suspend fun Eliminar(ocupacion: Ocupacion)= ocupacionDao.Eliminar(ocupacion)
+
+    fun Buscar(ocupacion:Int)= ocupacionDao.Buscar(ocupacion)
+
     fun List(): Flow<List<Ocupacion>> = ocupacionDao.List()
 }

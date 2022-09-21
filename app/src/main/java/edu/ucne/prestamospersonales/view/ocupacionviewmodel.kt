@@ -13,11 +13,11 @@ import javax.inject.Inject
 class ocupacionviewmodel @Inject constructor(
     val ocupacionrepository: Ocupacionrepository
     ):ViewModel(){
-
+    var ocupacionBuscar by mutableStateOf("")
     var descripcion by mutableStateOf("")
     var salario by mutableStateOf("")
 
-    var pagos = ocupacionrepository.List()
+    var prestamo = ocupacionrepository.List()
         private set
 
     fun Guardar(){

@@ -1,13 +1,12 @@
 package edu.ucne.prestamospersonales.ui.theme.Componentes
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Money
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 
 import androidx.compose.runtime.Composable
@@ -17,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import edu.ucne.prestamospersonales.model.Ocupacion
 import edu.ucne.prestamospersonales.view.ocupacionviewmodel
 
 @Composable
@@ -28,9 +28,27 @@ fun RegistroOcupacion (backToDashboard:() -> Unit, viewModel: ocupacionviewmodel
     var salarioValidar by remember { mutableStateOf(false)}
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(text = "Registro de ocupaciones") })
-        },
+            TopAppBar(title = { Text(text = "Registro de ocupaciones") },
 
+                actions =  {
+                    OutlinedTextField(
+                        value = viewModel.ocupacionBuscar,
+                        onValueChange = {viewModel.ocupacionBuscar = it},
+                        label = { Text(text = "Buscar")},
+                        modifier = Modifier
+                            .width(80.dp)
+                            .height(70.dp),
+                    singleLine = true)
+                    IconButton(onClick ={
+                        val ocupacionEncontrado = viewModel.ocupacionBuscar
+
+
+
+                    }) {
+                        Icon(Icons.Filled.Search, "Buscar")
+                    }
+                })
+             },
         scaffoldState = ScaffoldState
     ) {it
 

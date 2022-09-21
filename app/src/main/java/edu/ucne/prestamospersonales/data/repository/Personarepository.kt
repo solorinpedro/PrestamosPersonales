@@ -2,6 +2,7 @@ package edu.ucne.prestamospersonales.data.repository
 
 import edu.ucne.prestamospersonales.data.PersonasDao
 import edu.ucne.prestamospersonales.model.Persona
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class Personarepository @Inject constructor(
@@ -9,4 +10,7 @@ class Personarepository @Inject constructor(
 
         ){
     suspend fun Insertar (persona:Persona) = PersonasDao.Insertar(persona)
+
+    fun List(): Flow<List<Persona>> = PersonasDao.List()
+
 }

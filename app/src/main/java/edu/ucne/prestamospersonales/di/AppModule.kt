@@ -9,9 +9,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import edu.ucne.prestamospersonales.data.OcupacionDao
 import edu.ucne.prestamospersonales.data.PersonasDao
+import edu.ucne.prestamospersonales.data.PrestamoDao
 import edu.ucne.prestamospersonales.data.PrestamosDb
 import edu.ucne.prestamospersonales.data.repository.Ocupacionrepository
 import edu.ucne.prestamospersonales.data.repository.Personarepository
+import edu.ucne.prestamospersonales.data.repository.Prestamorepository
 import javax.inject.Singleton
 
 @Module
@@ -47,4 +49,13 @@ object AppModule {
     fun ProvidesPrestamorePepository(prestamosDao: PersonasDao):Personarepository{
         return Personarepository(prestamosDao)
     }
+    @Provides
+    fun ProvidePrestamosDAO(prestamosDb: PrestamosDb):PrestamoDao{
+        return  prestamosDb.PrestamoDao
+    }
+    @Provides
+    fun ProvidesPrestamoreRepository(prestamosDao: PrestamoDao):Prestamorepository{
+        return Prestamorepository(prestamosDao)
+    }
+
 }

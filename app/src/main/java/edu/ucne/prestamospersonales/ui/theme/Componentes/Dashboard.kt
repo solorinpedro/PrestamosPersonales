@@ -8,9 +8,11 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import edu.ucne.prestamospersonales.model.Prestamo
 
 @Composable
-fun Dashboard(goRegistroPersonas:() -> Unit, goRegistroOcupaciones:() -> Unit) {
+fun Dashboard(goRegistroPersonas:() -> Unit, goRegistroOcupaciones:() -> Unit,
+              goRegistroPrestamo:() -> Unit) {
 
     val ScaffoldState = rememberScaffoldState()
     val context = LocalContext.current
@@ -42,7 +44,7 @@ fun Dashboard(goRegistroPersonas:() -> Unit, goRegistroOcupaciones:() -> Unit) {
             }
             OutlinedButton(
                 onClick = {
-                          goRegistroOcupaciones()
+                    goRegistroOcupaciones()
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -51,7 +53,19 @@ fun Dashboard(goRegistroPersonas:() -> Unit, goRegistroOcupaciones:() -> Unit) {
                     text = "Ocupaciones",
                 )
             }
-        }
 
+            OutlinedButton(
+                onClick = {
+                    goRegistroPrestamo()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                Text(
+                    text = "Prestamos",
+                )
+            }
+
+        }
     }
 }

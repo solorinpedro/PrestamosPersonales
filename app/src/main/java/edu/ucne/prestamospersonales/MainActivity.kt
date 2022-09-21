@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import edu.ucne.prestamospersonales.ui.theme.Componentes.Dashboard
 import edu.ucne.prestamospersonales.ui.theme.Componentes.RegistroOcupacion
 import edu.ucne.prestamospersonales.ui.theme.Componentes.RegistroPersona
+import edu.ucne.prestamospersonales.ui.theme.Componentes.RegistroPrestamos
 import edu.ucne.prestamospersonales.ui.theme.PrestamosPersonalesTheme
 import edu.ucne.prestamospersonales.util.Screen
 import edu.ucne.prestamospersonales.view.ocupacionviewmodel
@@ -55,7 +56,8 @@ fun MyApp() {
 
                 composable(route = Screen.DashBoardScreen.route){
                     Dashboard(goRegistroPersonas = {navHostController.navigate(Screen.RegistroPersonaScreen.route)},
-                        goRegistroOcupaciones = {navHostController.navigate(Screen.RegistroOcupaciones.route)})
+                        goRegistroOcupaciones = {navHostController.navigate(Screen.RegistroOcupaciones.route)},
+                    goRegistroPrestamo = {navHostController.navigate(Screen.RegistroPrestamosScreen.route)})
                 }
 
                 composable(route = Screen.RegistroPersonaScreen.route){
@@ -65,12 +67,13 @@ fun MyApp() {
                 composable(route = Screen.RegistroOcupaciones.route){
                     RegistroOcupacion(backToDashboard ={ navHostController.navigate(Screen.DashBoardScreen.route)})
                 }
+                composable(route = Screen.RegistroPrestamosScreen.route){
+                    RegistroPrestamos(backToDashboard = {navHostController.navigate(Screen.DashBoardScreen.route)})
+                }
             }
         }
     }
 }
-
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun DefaultPreview() {
