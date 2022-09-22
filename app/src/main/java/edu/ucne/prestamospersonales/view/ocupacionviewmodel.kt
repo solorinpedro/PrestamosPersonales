@@ -31,6 +31,11 @@ class ocupacionviewmodel @Inject constructor(
             )
         }
     }
+    fun Buscar(){
+        viewModelScope.launch {
+            
+        }
+    }
 }
 
 

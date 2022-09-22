@@ -16,7 +16,7 @@ class Ocupacionrepository @Inject constructor(
 
     suspend fun Eliminar(ocupacion: Ocupacion)= ocupacionDao.Eliminar(ocupacion)
 
-    fun Buscar(ocupacion:Int)= ocupacionDao.Buscar(ocupacion)
+    suspend fun Buscar(ocupacion:Int)= ocupacionDao.Buscar(ocupacion)
 
     fun List(): Flow<List<Ocupacion>> = ocupacionDao.List()
 }
